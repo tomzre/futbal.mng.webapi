@@ -1,0 +1,145 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/tomasz/Desktop/Projects/futbal-mng/src/Futbal.Mng.Infrastructure/Futbal.Mng.Infrastructure.csproj": {}
+  },
+  "projects": {
+    "/Users/tomasz/Desktop/Projects/futbal-mng/src/Futbal.Mng.Domain/Futbal.Mng.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/tomasz/Desktop/Projects/futbal-mng/src/Futbal.Mng.Domain/Futbal.Mng.Domain.csproj",
+        "projectName": "Futbal.Mng.Domain",
+        "projectPath": "/Users/tomasz/Desktop/Projects/futbal-mng/src/Futbal.Mng.Domain/Futbal.Mng.Domain.csproj",
+        "packagesPath": "/Users/tomasz/.nuget/packages/",
+        "outputPath": "/Users/tomasz/Desktop/Projects/futbal-mng/src/Futbal.Mng.Domain/obj/",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "/Users/tomasz/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "sources": {
+          "/Users/tomasz/.dotnet/NuGetFallbackFolder": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.0": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "dependencies": {
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    },
+    "/Users/tomasz/Desktop/Projects/futbal-mng/src/Futbal.Mng.Infrastructure/Futbal.Mng.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/tomasz/Desktop/Projects/futbal-mng/src/Futbal.Mng.Infrastructure/Futbal.Mng.Infrastructure.csproj",
+        "projectName": "Futbal.Mng.Infrastructure",
+        "projectPath": "/Users/tomasz/Desktop/Projects/futbal-mng/src/Futbal.Mng.Infrastructure/Futbal.Mng.Infrastructure.csproj",
+        "packagesPath": "/Users/tomasz/.nuget/packages/",
+        "outputPath": "/Users/tomasz/Desktop/Projects/futbal-mng/src/Futbal.Mng.Infrastructure/obj/",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "/Users/tomasz/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "sources": {
+          "/Users/tomasz/.dotnet/NuGetFallbackFolder": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.0": {
+            "projectReferences": {
+              "/Users/tomasz/Desktop/Projects/futbal-mng/src/Futbal.Mng.Domain/Futbal.Mng.Domain.csproj": {
+                "projectPath": "/Users/tomasz/Desktop/Projects/futbal-mng/src/Futbal.Mng.Domain/Futbal.Mng.Domain.csproj",
+                "privateAssets": "all"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[8.1.1, )"
+            },
+            "Autofac": {
+              "target": "Package",
+              "version": "[4.9.2, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[2.2.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.Relational": {
+              "target": "Package",
+              "version": "[2.2.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[2.2.4, )"
+            },
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    }
+  }
+}
