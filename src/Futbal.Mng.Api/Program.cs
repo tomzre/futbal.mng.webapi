@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
@@ -19,6 +20,10 @@ namespace Futbal.Mng.Api
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .UseKestrel(options => {
+                    options.Listen(IPAddress.Loopback, 5000); //HTTP port
+                    options.Listen(IPAddress.Loopback, 6010, cfg => cfg.UseHttps()); //HTTPS port
+                    })
                 .UseStartup<Startup>();
     }
 }
