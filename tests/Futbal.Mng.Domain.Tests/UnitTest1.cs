@@ -24,8 +24,8 @@ namespace Tests
 
             Assert.AreEqual(2, game.Attendees.Count());
 
-            Assert.IsTrue(game.Attendees.First(x => x.Username == "login").Username == expectedOwner);
-            Assert.IsTrue(game.Attendees.First(x => x.Username == "one_attendee").Username == expectedUser);
+            Assert.IsTrue(game.Attendees.First(x => x.User.Username == "login").User.Username == expectedOwner);
+            Assert.IsTrue(game.Attendees.First(x => x.User.Username == "one_attendee").User.Username == expectedUser);
         }
 
         [Test]

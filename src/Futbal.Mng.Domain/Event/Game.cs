@@ -42,10 +42,16 @@ namespace Futbal.Mng.Domain.Event
             SetUpdatedOn();
         }
 
-        public void UpdatePlace(Address newAddress)
+        public bool UpdatePlace(Address newAddress)
         {
+            if(Place != null)
+            {
+                if(newAddress.Equals(Place))
+                    return false;
+            }
             Place = newAddress;
             SetUpdatedOn();
+            return true;
         }
 
         public void AddAttendee(User attendee)

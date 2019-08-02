@@ -23,9 +23,9 @@ WHERE database_id  = db_id('FutbalMng')
 
 EXEC(@kill);
 
-USE FutbalMng
+
 CREATE USER futadmin for login futadmin
-select * from users
+
 
 CREATE LOGIN futadmin WITH PASSWORD ='Fut@dm1npass'
 CREATE USER futadmin for login futadmin
@@ -41,9 +41,13 @@ GRANT SELECT ON OBJECT::users TO futadmin
 
 USE FutbalMng
 select * from users
+
+
 USE FutbalMng
+select * from games
 
 select * from UserGame
+USE FutbalMng
 
 SELECT * FROM INFORMATION_SCHEMA.TABLES 
 WHERE TABLE_TYPE='BASE TABLE'

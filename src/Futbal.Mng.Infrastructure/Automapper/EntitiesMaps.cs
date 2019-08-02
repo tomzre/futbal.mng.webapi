@@ -19,6 +19,12 @@ namespace Futbal.Mng.Infrastructure.Automapper
                 .ForMember(x => x.Address, w => w.MapFrom(o => o.Place))
                 .ForMember(x => x.Attendees, w => w.Ignore());
 
+            CreateMap<Game, GameDetailsGridDto>()
+                .ForMember(x => x.Address, w => w.MapFrom(o => o.Place))
+                .ForMember(x => x.TotalAttendees, w => w.Ignore())
+                .ForMember(x => x.RequiredAttendees, w => w.Ignore())
+                .ForMember(x => x.AvailableAttendees, w => w.Ignore());
+            
             CreateMap<User, OwnerDto>()
                 .ForMember(x => x.FirstName, w => w.MapFrom(o => o.Username))
                 .ForMember(x => x.LastName, w => w.MapFrom(o => o.Email));

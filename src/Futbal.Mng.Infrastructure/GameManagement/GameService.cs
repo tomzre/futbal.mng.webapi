@@ -34,8 +34,19 @@ namespace Futbal.Mng.Infrastructure.GameManagement
 
         public async Task AddNewGame(GameDto newGame)
         {
+            if(newGame.OwnerId == Guid.Empty)
+            {
+                throw new ArgumentException("Owner id is empty. Cannot create game");
+            }
             var owner = await _userRepository.GetUser(newGame.OwnerId);
+
+            if(owner == null)
+            {
+                throw new ArgumentNullException($"Cannot find user for given id: {newGame.OwnerId}");
+            }
+            var address = Address.Create(newGame.Address.Street, newGame.Address.Number);
             var game = new Game(newGame.Name, newGame.GameDate, owner);
+            game.UpdatePlace(address);
             await _gameRepository.AddGame(game);
         }
 
@@ -52,7 +63,7 @@ namespace Futbal.Mng.Infrastructure.GameManagement
                 FirstName = x.User?.Email,
                 Id = x.UserId
                 });
-                
+            
             return mappedGame;
         }
 
@@ -61,25 +72,17 @@ namespace Futbal.Mng.Infrastructure.GameManagement
             await _gameRepository.UpdatePlace(id, Address.Create(newAddress.Street, newAddress.Number));
         }
 
-        public async Task<IEnumerable<GameDetailsDto>> GetUserGames(Guid userId)
+        public async Task<IEnumerable<GameDetailsGridDto>> GetUserGames(Guid userId)
         {
             var userGames = await _gameRepository.GetUserGames(userId);
 
-            var mappedGames = _mapper.Map<IList<GameDetailsDto>>(userGames);
+            var mappedGames = _mapper.Map<IList<GameDetailsGridDto>>(userGames);
 
             foreach (var mappedGame in mappedGames)
             {
-                mappedGame.Attendees = 
-                userGames
-                .Where(x => x.Id == mappedGame.Id)
-                .SelectMany(x => x.Attendees
-                    .Select(y => new AttendeeDto
-                        {
-                            IsAvailable = y.IsAvailable,
-                            LastName = y.User?.Username,
-                            FirstName = y.User?.Email,
-                            Id = y.UserId
-                        }));
+                mappedGame.AvailableAttendees = userGames.FirstOrDefault(x => x.Id == mappedGame.Id).Attendees.Where(x => x.IsAvailable == true).Count();
+                mappedGame.RequiredAttendees = 14;
+                mappedGame.TotalAttendees = userGames.FirstOrDefault(x => x.Id == mappedGame.Id).Attendees.Count();
             }
 
             return mappedGames;

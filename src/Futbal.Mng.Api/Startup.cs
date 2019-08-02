@@ -37,7 +37,7 @@ namespace Futbal.Mng.Api
             cfg =>
             {
                 cfg.WithOrigins("http://localhost:4200",
-                                    "http://www.contoso.com");
+                                    "https://futbalmng.serveo.net");
                 cfg.AllowAnyMethod();
                 cfg.AllowAnyHeader();
             });

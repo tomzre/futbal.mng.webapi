@@ -10,6 +10,13 @@
     <PackageReference Include="nunit" Version="3.11.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.11.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
+    <PackageReference Include="Moq" Version="4.12.0" />
+    <PackageReference Include="AutoMapper" Version="8.1.1" />
+  </ItemGroup>
+
+ <ItemGroup>
+  <ProjectReference Include="../../src/Futbal.Mng.Infrastructure\Futbal.Mng.Infrastructure.csproj" PrivateAssets="All"/>
+  <ProjectReference Include="../../src/Futbal.Mng.Domain\Futbal.Mng.Domain.csproj" PrivateAssets="All"/>
   </ItemGroup>
 
 </Project>

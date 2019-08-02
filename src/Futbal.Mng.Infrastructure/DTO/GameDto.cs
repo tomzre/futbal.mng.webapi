@@ -8,6 +8,8 @@ namespace Futbal.Mng.Infrastructure.DTO
 
         public DateTime GameDate { get; set; }
 
+        public PlaceDto Address { get; set; }
+
         public Guid OwnerId { get; set; }
     }
 }

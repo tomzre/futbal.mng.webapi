@@ -14,7 +14,7 @@ namespace Futbal.Mng.Infrastructure.Interfaces
 
         Task UpdateGamePlace(Guid id, PlaceDto newAddress);
 
-        Task<IEnumerable<GameDetailsDto>> GetUserGames(Guid userId);
+        Task<IEnumerable<GameDetailsGridDto>> GetUserGames(Guid userId);
 
         Task SetAttendeeAvailability(Guid id, SetAvailabilityDto availability);
     }

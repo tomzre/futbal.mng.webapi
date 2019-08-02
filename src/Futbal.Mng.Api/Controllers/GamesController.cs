@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Futbal.Mng.Api.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class GamesController : ControllerBase
     {
         private readonly IGameService _gameService;

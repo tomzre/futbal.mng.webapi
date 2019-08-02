@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Futbal.Mng.Infrastructure.DTO;
 using Futbal.Mng.Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,6 +26,12 @@ namespace Futbal.Mng.Api.Controllers
             var games = await _gameService.GetUserGames(userId);
 
             return Ok(games);
+        }
+
+        [HttpPost]
+        public async Task CreateUser(UserDto userDto)
+        {
+            await _userService.CreateUser(userDto);
         }
     }
 }

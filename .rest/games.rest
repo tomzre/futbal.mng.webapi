@@ -1,0 +1,45 @@
+GET https://futbalmng.serveo.net:6010/api/users/5ebbf591-f261-4a7c-ab76-82e4d5cfebe0/mygames
+
+###
+
+GET https://localhost:6010/api/users/5ebbf591-f261-4a7c-ab76-82e4d5cfebe0/mygames
+
+###
+
+POST https://localhost:6010/api/users HTTP/1.1
+content-type: application/json
+
+{
+    "userName": "testowy_user2",
+    "password": "mocnehaslo",
+    "email": "test@email.com"
+}
+
+###
+
+POST https://localhost:6010/api/games HTTP/1.1
+content-type: application/json
+
+{
+    "name": "new-game",
+    "gameDate": "2019-07-28 19:00",
+    "ownerId": "5ebbf591-f261-4a7c-ab76-82e4d5cfebe0"
+}
+
+###
+
+PUT https://localhost:6010/api/games/e6ac5143-d58b-48a8-26e5-08d711fc5926/attendees/266cad8a-c1f0-428a-9801-84ce5ed7ab2a HTTP/1.1
+content-type: application/json
+
+###
+GET https://localhost:6010/api/games/e6ac5143-d58b-48a8-26e5-08d711fc5926
+
+###
+#update place
+PUT https://localhost:6010/api/games/e6ac5143-d58b-48a8-26e5-08d711fc5926/places HTTP/1.1
+content-type: application/json
+
+{
+    "street": "tyniecka",
+    "number": 39
+}

@@ -25,5 +25,11 @@ namespace Futbal.Mng.Infrastructure.UserManagement.Services
 
            return new GameDetailsDto{ };
         }
+
+        public async Task CreateUser(UserDto userDto)
+        {
+            var user = new User(userDto.Username, userDto.Password, userDto.Email);
+            await _userRepository.Add(user);
+        }
     }
 }

@@ -44,10 +44,9 @@ namespace Futbal.Mng.Infrastructure.GameManagement
             var game = _context.Games
                 .FirstOrDefault(x => x.Id == gameId);
             
-            if(game.Place.Equals(newPlace))
+            if(!game.UpdatePlace(newPlace))
                 return;
-        
-            game.UpdatePlace(newPlace);
+                
             _context.Games.Update(game);
             await _context.SaveChangesAsync();
         }
