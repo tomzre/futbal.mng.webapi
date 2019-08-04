@@ -44,11 +44,17 @@ namespace Futbal.Mng.Domain.Event
 
         public bool UpdatePlace(Address newAddress)
         {
-            if(Place != null)
+            if(newAddress == null)
+            {
+                return false;
+            }
+
+            if(Place != null || newAddress != null)
             {
                 if(newAddress.Equals(Place))
                     return false;
             }
+            
             Place = newAddress;
             SetUpdatedOn();
             return true;

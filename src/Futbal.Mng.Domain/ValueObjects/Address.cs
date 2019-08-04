@@ -19,9 +19,13 @@ namespace Futbal.Mng.Domain.ValueObjects
 
         public override bool Equals(object obj)
         {
+            if(obj == null)
+            {
+                return false;
+            }
             Address objAddress = (Address)obj;
 
-            if(objAddress.Street.ToLower() == Street.ToLower() && objAddress.Number == Number)
+            if(objAddress.Street == Street && objAddress.Number == Number)
             {
                 return true;
             }

@@ -1,10 +1,10 @@
 GET https://futbalmng.serveo.net:6010/api/users/5ebbf591-f261-4a7c-ab76-82e4d5cfebe0/mygames
 
-###
+### both are get user games.
 
 GET https://localhost:6010/api/users/5ebbf591-f261-4a7c-ab76-82e4d5cfebe0/mygames
 
-###
+### cerate user. temporary in this service.
 
 POST https://localhost:6010/api/users HTTP/1.1
 content-type: application/json
@@ -15,7 +15,7 @@ content-type: application/json
     "email": "test@email.com"
 }
 
-###
+### create new game (address can be added)
 
 POST https://localhost:6010/api/games HTTP/1.1
 content-type: application/json

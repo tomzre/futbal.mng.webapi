@@ -44,7 +44,9 @@ namespace Futbal.Mng.Infrastructure.GameManagement
             {
                 throw new ArgumentNullException($"Cannot find user for given id: {newGame.OwnerId}");
             }
-            var address = Address.Create(newGame.Address.Street, newGame.Address.Number);
+            Address address = null;
+            if(newGame.Address != null)
+                address = Address.Create(newGame.Address.Street, newGame.Address.Number);
             var game = new Game(newGame.Name, newGame.GameDate, owner);
             game.UpdatePlace(address);
             await _gameRepository.AddGame(game);
