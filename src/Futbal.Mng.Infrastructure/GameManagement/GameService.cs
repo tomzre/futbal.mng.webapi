@@ -68,7 +68,6 @@ namespace Futbal.Mng.Infrastructure.GameManagement
             
             return mappedGame;
         }
-
         public async Task UpdateGamePlace(Guid id, PlaceDto newAddress)
         {
             await _gameRepository.UpdatePlace(id, Address.Create(newAddress.Street, newAddress.Number));

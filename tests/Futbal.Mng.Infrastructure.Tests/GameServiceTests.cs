@@ -36,12 +36,15 @@ namespace Tests
         {
             //Arrange
             var sut = new GameService(_gameRepoMock.Object, _userRepoMock.Object, _mapper.Object);
-            _mapper.Setup(m => m.Map<IList<GameDetailsDto>>(It.IsAny<object>()))
-                .Returns(new List<GameDetailsDto>{
-                    new GameDetailsDto()
+            _mapper.Setup(m => m.Map<IList<GameDetailsGridDto>>(It.IsAny<object>()))
+                .Returns(new List<GameDetailsGridDto>{
+                    new GameDetailsGridDto()
                 });
+                var ownerUser = new User("userName", "password", "email");
             _gameRepoMock.Setup(m => m.GetUserGames(It.IsAny<Guid>()))
-                .ReturnsAsync(new List<Game>());
+                .ReturnsAsync(new List<Game>{
+                    new Game("gamename", DateTime.Now, ownerUser)
+                });
 
             //Act
             var result = await sut.GetUserGames(It.IsAny<Guid>());

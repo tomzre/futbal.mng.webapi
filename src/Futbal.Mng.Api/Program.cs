@@ -21,7 +21,7 @@ namespace Futbal.Mng.Api
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseKestrel(options => {
-                    options.Listen(IPAddress.Loopback, 5000); //HTTP port
+                    options.Listen(IPAddress.Loopback, 6009); //HTTP port
                     options.Listen(IPAddress.Loopback, 6010, cfg => cfg.UseHttps()); //HTTPS port
                     })
                 .UseStartup<Startup>();
