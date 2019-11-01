@@ -21,8 +21,8 @@ POST https://localhost:6010/api/games HTTP/1.1
 content-type: application/json
 
 {
-    "name": "new-game",
-    "gameDate": "2019-07-28 19:00",
+    "name": "new-game2",
+    "gameDate": "2019-07-28",
     "ownerId": "5ebbf591-f261-4a7c-ab76-82e4d5cfebe0"
 }
 
@@ -36,7 +36,7 @@ GET https://localhost:6010/api/games/e6ac5143-d58b-48a8-26e5-08d711fc5926
 
 ###
 #update place
-PUT https://localhost:6010/api/games/e6ac5143-d58b-48a8-26e5-08d711fc5926/places HTTP/1.1
+PUT https://localhost:6010/api/games/6d1e237d-d9ed-4b46-39d5-08d75edf11a9/places HTTP/1.1
 content-type: application/json
 
 {

@@ -26,7 +26,6 @@ namespace Futbal.Mng.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddGrpc();
             services.AddCors(options =>
         {
             options.AddPolicy("default",
@@ -42,9 +41,12 @@ namespace Futbal.Mng.Api
                 .AddDbContext<FutbalMngContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("FutbalMngDatabase"),
                     m => m.MigrationsAssembly("Futbal.Mng.Infrastructure")));
-            services.AddMvc()
+            services.AddMvc(mvcOptions => {
+                mvcOptions.EnableEndpointRouting = false;
+            })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
                 .AddControllersAsServices();
+            services.AddGrpc();
 
 
             var builder = new ContainerBuilder();
@@ -57,9 +59,9 @@ namespace Futbal.Mng.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            if (env.EnvironmentName == "Development")
             {
                 app.UseDeveloperExceptionPage();
             }
@@ -70,6 +72,7 @@ namespace Futbal.Mng.Api
             }
             app.UseCors("default");
             app.UseHttpsRedirection();
+            app.UseRouting();
             app.UseMvc();
             app.UseEndpoints(endpoints => 
             {

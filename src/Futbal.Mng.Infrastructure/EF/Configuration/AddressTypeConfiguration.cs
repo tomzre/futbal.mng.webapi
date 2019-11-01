@@ -11,7 +11,7 @@ namespace Futbal.Mng.Infrastructure.EF.Configuration
             configuration.ToTable("address");
             configuration.Property<int>("Id")  // Id is a shadow property
                 .IsRequired();
-
+            
             configuration.HasKey("Id");
         }
     }

@@ -20,7 +20,7 @@ namespace Futbal.Mng.Infrastructure.EF
         {
             modelBuilder.ApplyConfiguration(new UserEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new GameEntityTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new AddressTypeConfiguration());
+            //modelBuilder.ApplyConfiguration(new AddressTypeConfiguration());
             modelBuilder.ApplyConfiguration(new GameUserTypeConfiguration());
         }
     }

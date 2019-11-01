@@ -1,26 +1,29 @@
 using System;
 using System.Threading.Tasks;
+using Futbal.Mng.Infrastructure.Commands;
 using Futbal.Mng.Infrastructure.DTO;
 using Futbal.Mng.Infrastructure.Interfaces;
+using Futbal.Mng.Infrastructure.Interfaces.CommandHandler;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Futbal.Mng.Api.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class GamesController : ControllerBase
+    
+    public class GamesController : ApiBaseController
     {
         private readonly IGameService _gameService;
+        private readonly ICommandBus _commandBus;
 
-        public GamesController(IGameService gameService)
+        public GamesController(ICommandBus commandBus)
         {
-            _gameService = gameService;
+            
+            _commandBus = commandBus;
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddNewGame(GameDto newGame)
+        public async Task<IActionResult> AddNewGame(CreateNewGameCommand command)
         {
-            await _gameService.AddNewGame(newGame);
+            await _commandBus.SendCommandAsync(command);
             return Ok();
         }
 
@@ -40,9 +43,10 @@ namespace Futbal.Mng.Api.Controllers
         }
 
         [HttpPut("{id}/places")]
-        public async Task<IActionResult> UpdateGamePlace(Guid id, PlaceDto newAddress)
+        public async Task<IActionResult> UpdateGamePlace(Guid id, ChangeGamePlaceCommand command)
         {
-            await _gameService.UpdateGamePlace(id, newAddress);
+            command.GameId = id;
+            await _commandBus.SendCommandAsync(command);
             return Ok();
         }
 
