@@ -81,9 +81,16 @@ namespace Futbal.Mng.Infrastructure.GameManagement
 
             foreach (var mappedGame in mappedGames)
             {
-                mappedGame.AvailableAttendees = userGames.FirstOrDefault(x => x.Id == mappedGame.Id).Attendees.Where(x => x.IsAvailable == true).Count();
+                mappedGame.AvailableAttendees = userGames
+                    .FirstOrDefault(x => x.Id == mappedGame.Id)
+                    .Attendees.Where(x => x.IsAvailable == true)
+                    .Count();
+
                 mappedGame.RequiredAttendees = 14;
-                mappedGame.TotalAttendees = userGames.FirstOrDefault(x => x.Id == mappedGame.Id).Attendees.Count();
+                mappedGame.TotalAttendees = userGames
+                    .FirstOrDefault(x => x.Id == mappedGame.Id)
+                    .Attendees
+                    .Count();
             }
 
             return mappedGames;
