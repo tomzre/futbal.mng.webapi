@@ -27,9 +27,10 @@ namespace Futbal.Mng.Api.Controllers
         }
 
         [HttpPost]
-        public async Task CreateUser(UserDto userDto)
+        public async Task<IActionResult> CreateUser(UserDto userDto)
         {
             await _userService.CreateUser(userDto);
+            return Ok();
         }
     }
 }

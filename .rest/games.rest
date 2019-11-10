@@ -6,7 +6,7 @@ GET https://localhost:6010/api/users/5ebbf591-f261-4a7c-ab76-82e4d5cfebe0/mygame
 
 ### cerate user. temporary in this service.
 
-POST https://localhost:6010/api/users HTTP/1.1
+POST https://localhost:6010/api/users/ HTTP/1.1
 content-type: application/json
 
 {
