@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "futbal-mng-api.fullname" . }}-test-connection"
+  labels:
+{{ include "futbal-mng-api.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args:  ['{{ include "futbal-mng-api.fullname" . }}:{{ .Values.service.port }}']
+  restartPolicy: Never
