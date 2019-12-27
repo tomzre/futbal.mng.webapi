@@ -22,10 +22,11 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Build with docker
+      uses: actions/futbal.mng.webapi@v1
       with:
         cr_pass: ${{ secrets.CONTAINER_PWD }}
         cr_usr: ${{ secrets.CONTAINER_USR }}
       run: |
-        docker login ${{ cr_usr }}/azureacr.io -p {{ cr_pass }}
         docker build . -t tomzreacr.azurecr.io/futbalapi 
+        docker login ${{ cr_usr }}/azureacr.io -p {{ cr_pass }}
         docker push tomzreacr.azurecr.io/futbalapi
