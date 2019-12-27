@@ -22,10 +22,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Build with docker
-      with:
-        cr_pass: ${{ secrets.CONTAINER_PWD }}
-        cr_usr: ${{ secrets.CONTAINER_USR }}
       run: |
         docker build . -t tomzreacr.azurecr.io/futbalapi 
-        docker login ${{ cr_usr }}/azureacr.io -p {{ cr_pass }}
+        docker login ${{ secrets.CONTAINER_USR  }}/azureacr.io -p {{ secrets.CONTAINER_PWD  }}
         docker push tomzreacr.azurecr.io/futbalapi
