@@ -1,7 +1,9 @@
 name: build
 
-on: [push]
-
+on:
+  push:
+    branches:
+    - master
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,7 +17,8 @@ jobs:
       with:
         cr_pass: ${{ secrets.CONTAINER_PWD }}
         cr_usr: ${{ secrets.CONTAINER_USR }}
-      run: dotnet test
-      run: docker login ${{ cr_usr }}/azureacr.io -p {{ cr_pass }}
-      run: docker build . -t tomzreacr.azurecr.io/futbalapi
-      run: docker push tomzreacr.azurecr.io/futbalapi
+      run: |
+        dotnet test
+        docker login ${{ cr_usr }}/azureacr.io -p {{ cr_pass }}
+        docker build . -t tomzreacr.azurecr.io/futbalapi 
+        docker push tomzreacr.azurecr.io/futbalapi
