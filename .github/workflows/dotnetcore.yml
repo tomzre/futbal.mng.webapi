@@ -22,7 +22,6 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Build with docker
-      uses: actions/futbal.mng.webapi@v1
       with:
         cr_pass: ${{ secrets.CONTAINER_PWD }}
         cr_usr: ${{ secrets.CONTAINER_USR }}
