@@ -24,7 +24,9 @@ jobs:
     - name: Build with docker
       run: docker build . -t tomzreacr.azurecr.io/futbalapi 
     - name: login to CR
-      run: docker login -u tomzreacr -p $CI_REGISTRY_TOKEN
+      run: |
+        echo $CI_REGISTRY_TOKEN
+        docker login -u tomzreacr -p $CI_REGISTRY_TOKEN
       env:
           CI_REGISTRY_TOKEN: ${{ secrets.CONTAINER_PWD }}
     - name: push to CR
