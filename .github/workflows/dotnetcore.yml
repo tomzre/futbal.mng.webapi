@@ -24,5 +24,5 @@ jobs:
     - name: Build with docker
       run: |
         docker build . -t tomzreacr.azurecr.io/futbalapi 
-        docker login -u ${{ secrets.CONTAINER_USR  }} -p {{ secrets.CONTAINER_PWD  }}
+        docker login -u tomzreacr -p {{ secrets.CONTAINER_PWD }}
         docker push tomzreacr.azurecr.io/futbalapi
