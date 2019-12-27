@@ -7,7 +7,7 @@ on:
     - add-docker-compose
     
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
@@ -15,12 +15,16 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 2.2.108
-    - name: Build with dotnet
+      run: dotnet test
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build with docker
       with:
         cr_pass: ${{ secrets.CONTAINER_PWD }}
         cr_usr: ${{ secrets.CONTAINER_USR }}
       run: |
-        dotnet test
         docker login ${{ cr_usr }}/azureacr.io -p {{ cr_pass }}
         docker build . -t tomzreacr.azurecr.io/futbalapi 
         docker push tomzreacr.azurecr.io/futbalapi
