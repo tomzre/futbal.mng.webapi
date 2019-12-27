@@ -74,7 +74,7 @@ namespace Futbal.Mng.Api
                 app.UseHsts();
             }
             app.UseCors("default");
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseMvc();
         }
     }

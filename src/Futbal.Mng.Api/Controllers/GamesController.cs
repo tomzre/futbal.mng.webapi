@@ -17,6 +17,12 @@ namespace Futbal.Mng.Api.Controllers
             _gameService = gameService;
         }
 
+        [HttpGet]
+        public async Task<string> ServiceEndpoint()
+        {
+            return "games-management-service";
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddNewGame(GameDto newGame)
         {
