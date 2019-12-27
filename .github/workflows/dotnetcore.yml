@@ -22,7 +22,8 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Build with docker
-      run: |
-        docker build . -t tomzreacr.azurecr.io/futbalapi 
-        docker login -u tomzreacr -p {{ secrets.CONTAINER_PWD }}
-        docker push tomzreacr.azurecr.io/futbalapi
+      run: docker build . -t tomzreacr.azurecr.io/futbalapi 
+    - name: login to CR
+      run: docker login -u tomzreacr -p {{ secrets.CONTAINER_PWD }}
+    - name: push to CR
+      run: docker push tomzreacr.azurecr.io/futbalapi
