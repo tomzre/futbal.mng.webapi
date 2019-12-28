@@ -12,7 +12,7 @@ jobs:
       with:
         namespace: 'default'
         secrets: '${{ toJSON(secrets) }}'
-        chart: 'app'
+        chart: 'futchart'
         token: '${{ github.token }}'
         release: futbalapi
       env:
