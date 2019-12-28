@@ -7,7 +7,7 @@ production:
     #value_files: ["./config/production.yml", "./config/_common.yml"]
     # Remove the canary deployment if it exists when doing a full prod deploy.
     remove_canary: true
-    release: futchart
+    release: futapi
     namespace: default
     track: stable
     values:
