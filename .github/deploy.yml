@@ -6,9 +6,9 @@ production:
   payload:
     #value_files: ["./config/production.yml", "./config/_common.yml"]
     # Remove the canary deployment if it exists when doing a full prod deploy.
-    remove_canary: true
-    release: futapi
+    #remove_canary: true
+    release: futbalapi
     namespace: default
-    track: stable
+    #track: stable
     values:
       replicaCount: 1
