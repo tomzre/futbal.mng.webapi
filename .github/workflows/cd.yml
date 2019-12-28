@@ -14,6 +14,6 @@ jobs:
         secrets: '${{ toJSON(secrets) }}'
         chart: 'app'
         token: '${{ github.token }}'
-        release: futapi
+        release: futbalapi
       env:
         KUBECONFIG_FILE: '${{ secrets.KUBECONFIG }}'
