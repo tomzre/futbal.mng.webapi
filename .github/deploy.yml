@@ -1,0 +1,20 @@
+# .github/workflows/deploy.yml
+name: Deploy
+on: ['deployment']
+
+jobs:
+  deployment:
+    runs-on: 'ubuntu-latest'
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: 'Deploy'
+      uses: 'deliverybot/helm@v1'
+      with:
+        namespace: 'default'
+        secrets: '${{ toJSON(secrets) }}'
+        chart: 'app'
+        token: '${{ github.token }}'
+        release: futapi
+      env:
+        KUBECONFIG_FILE: '${{ secrets.KUBECONFIG }}'
