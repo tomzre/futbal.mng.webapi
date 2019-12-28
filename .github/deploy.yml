@@ -8,7 +8,6 @@ production:
     # Remove the canary deployment if it exists when doing a full prod deploy.
     #remove_canary: true
     release: futbalapi
-    chart: futchart
     namespace: default
     #track: stable
     values:
