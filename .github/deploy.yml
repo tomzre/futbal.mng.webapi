@@ -4,7 +4,7 @@ production:
   environment: development
   description: 'development'
   payload:
-    value_files: ["./config/production.yml", "./config/_common.yml"]
+    #value_files: ["./config/production.yml", "./config/_common.yml"]
     # Remove the canary deployment if it exists when doing a full prod deploy.
     remove_canary: true
     release: futchart
