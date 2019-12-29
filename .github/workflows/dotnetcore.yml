@@ -1,12 +1,14 @@
-name: .NET Core
+name: build
 
-on: [push]
-
+on:
+  push:
+    branches:
+    - master
+    - add-docker-compose
+    
 jobs:
-  build:
-
+  test:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v1
     - name: Setup .NET Core
@@ -15,3 +17,15 @@ jobs:
         dotnet-version: 2.2.108
     - name: Build with dotnet
       run: dotnet test
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build with docker
+      run: docker build . -t tomzreacr.azurecr.io/futbalapi 
+    - name: login to CR
+      run: docker login -u tomzreacr -p $CI_REGISTRY_TOKEN tomzreacr.azurecr.io
+      env:
+          CI_REGISTRY_TOKEN: ${{ secrets.CONTAINER_PWD }}
+    - name: push to CR
+      run: docker push tomzreacr.azurecr.io/futbalapi
