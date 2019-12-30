@@ -1,20 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Futbal.Mng.Infrastructure.EF;
 using Futbal.Mng.Infrastructure.IoC;
+using Futbal.Mng.Webapi;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace Futbal.Mng.Api
 {
@@ -43,13 +38,15 @@ namespace Futbal.Mng.Api
             });
         });
             services.AddEntityFrameworkSqlServer()
-                .AddEntityFrameworkInMemoryDatabase()
                 .AddDbContext<FutbalMngContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("FutbalMngDatabase"),
                     m => m.MigrationsAssembly("Futbal.Mng.Infrastructure")));
-            services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+            services.AddMvc(mvcOptions => {
+                mvcOptions.EnableEndpointRouting = false;
+            })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
                 .AddControllersAsServices();
+            services.AddGrpc();
 
 
             var builder = new ContainerBuilder();
@@ -62,9 +59,9 @@ namespace Futbal.Mng.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            if (env.EnvironmentName == "Development")
             {
                 app.UseDeveloperExceptionPage();
             }
@@ -74,8 +71,13 @@ namespace Futbal.Mng.Api
                 app.UseHsts();
             }
             app.UseCors("default");
+            app.UseRouting();
             //app.UseHttpsRedirection();
             app.UseMvc();
+            app.UseEndpoints(endpoints => 
+            {
+                endpoints.MapGrpcService<GameResponse>();
+            });
         }
     }
 }

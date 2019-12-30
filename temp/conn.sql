@@ -49,6 +49,8 @@ select * from games
 select * from UserGame
 USE FutbalMng
 
+select * from address
+
 SELECT * FROM INFORMATION_SCHEMA.TABLES 
 WHERE TABLE_TYPE='BASE TABLE'
 

@@ -11,7 +11,16 @@ namespace Futbal.Mng.Infrastructure.EF.Configuration
             configuration.ToTable("games")
                 .HasKey(x => x.Id);
 
-            configuration.OwnsOne(x => x.Place);
+            configuration.OwnsOne(x => x.Place, address =>
+                {
+                    address.WithOwner().HasForeignKey("GameId");
+                    address.ToTable("address");
+                    address.Property<int>("Id")  // Id is a shadow property
+                        .IsRequired();
+
+                    address.HasKey("Id");
+                }
+            );
             configuration.HasMany(x => x.Attendees);
 
             var navigation = configuration.Metadata.FindNavigation(nameof(Game.Attendees));

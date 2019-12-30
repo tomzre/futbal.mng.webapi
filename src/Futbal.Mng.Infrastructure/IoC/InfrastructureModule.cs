@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using Autofac;
 using AutoMapper;
+using Futbal.Mng.Infrastructure.CommandHandler;
+using Futbal.Mng.Infrastructure.Interfaces.CommandHandler;
 
 namespace Futbal.Mng.Infrastructure.IoC
 {
@@ -8,7 +10,7 @@ namespace Futbal.Mng.Infrastructure.IoC
     {
         protected override void Load(ContainerBuilder builder)
         {
-            var assemlbly = this.GetType().Assembly;
+            var assembly = this.GetType().Assembly;
 
         builder.RegisterAssemblyTypes(typeof(InfrastructureModule).Assembly).As<Profile>();
 
@@ -26,16 +28,23 @@ namespace Futbal.Mng.Infrastructure.IoC
                 .As<IMapper>()
                 .InstancePerLifetimeScope();
         
-            builder.RegisterAssemblyTypes(assemlbly)
+            builder.RegisterAssemblyTypes(assembly)
                 .Where(x => x.Name.EndsWith("Service"))
                 .AsImplementedInterfaces()
                 .InstancePerLifetimeScope();
 
-            builder.RegisterAssemblyTypes(assemlbly)
+            builder.RegisterAssemblyTypes(assembly)
                 .Where(x => x.Name.EndsWith("Repository"))
                 .AsImplementedInterfaces()
                 .InstancePerLifetimeScope();
 
+            builder.RegisterAssemblyTypes(assembly)
+                .AsClosedTypesOf(typeof(IHandleCommand<>))
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<CommandBus>()
+                .As<ICommandBus>()
+                .InstancePerLifetimeScope();
             
         }
 

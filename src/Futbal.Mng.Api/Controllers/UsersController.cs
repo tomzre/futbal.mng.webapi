@@ -6,9 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Futbal.Mng.Api.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class UsersController : ControllerBase
+    public class UsersController : ApiBaseController
     {
         private readonly IUserService _userService;
         private readonly IGameService _gameService;
@@ -29,9 +27,17 @@ namespace Futbal.Mng.Api.Controllers
         }
 
         [HttpPost]
-        public async Task CreateUser(UserDto userDto)
+        public async Task<IActionResult> CreateUser(UserDto userDto)
         {
             await _userService.CreateUser(userDto);
+            return Ok();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var users = await _userService.GetAllUsers();
+            return Ok(users);
         }
     }
 }

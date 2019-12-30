@@ -1,4 +1,8 @@
-GET http://localhost:5000/api/users/5ebbf591-f261-4a7c-ab76-82e4d5cfebe0/mygames
+##Get all users
+GET https://localhost:6010/api/users
+
+### getall
+GET https://localhost:6010/api/users/8231e479-a96c-4a73-9822-83cf988f71da/mygames
 
 
 
@@ -16,7 +20,7 @@ POST http://localhost:5000/api/users HTTP/1.1
 content-type: application/json
 
 {
-    "userName": "testowy_user2",
+    "username": "testowy_user2",
     "password": "mocnehaslo",
     "email": "test@email.com"
 }
@@ -27,9 +31,9 @@ POST https://localhost:443/api/games HTTP/1.1
 content-type: application/json
 
 {
-    "name": "new-game",
-    "gameDate": "2019-07-28 19:00",
-    "ownerId": "5ebbf591-f261-4a7c-ab76-82e4d5cfebe0"
+    "name": "new-game2",
+    "gameDate": "2019-07-28",
+    "ownerId": "8231e479-a96c-4a73-9822-83cf988f71da"
 }
 
 ###
@@ -42,7 +46,7 @@ GET https://localhost:6010/api/games/e6ac5143-d58b-48a8-26e5-08d711fc5926
 
 ###
 #update place
-PUT https://localhost:6010/api/games/e6ac5143-d58b-48a8-26e5-08d711fc5926/places HTTP/1.1
+PUT https://localhost:6010/api/games/6d1e237d-d9ed-4b46-39d5-08d75edf11a9/places HTTP/1.1
 content-type: application/json
 
 {

@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option csharp_namespace = "Futbal.Mng.Webapi";
+
+package model;
+
+// The greeting service definition.
+service GameService {
+  // Sends a greeting
+  rpc Game(GameResponse) returns (GameReply);
+}
+
+// The request message containing the user's name.
+message GameResponse {
+  string name = 1;
+}
+
+// The response message containing the greetings.
+message GameReply {
+  string message = 1;
+}

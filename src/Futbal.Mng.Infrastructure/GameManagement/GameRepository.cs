@@ -7,6 +7,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Futbal.Mng.Domain.UserManagement;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Futbal.Mng.Infrastructure.GameManagement
 {
@@ -53,11 +54,12 @@ namespace Futbal.Mng.Infrastructure.GameManagement
 
         public async Task<Game> GetAsync(Guid id)
         {
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(1000);
             return await _context.Games
                 .Include(x => x.Owner)
                 .Include(x => x.Attendees)
                 .ThenInclude(x => x.User)
-            .FirstOrDefaultAsync(x => x.Id == id);
+            .FirstOrDefaultAsync(x => x.Id == id, cancellationTokenSource.Token);
         }
 
         public async Task<ICollection<Game>> GetUserGames(Guid userId)

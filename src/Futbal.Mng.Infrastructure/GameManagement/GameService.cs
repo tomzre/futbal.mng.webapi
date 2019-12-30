@@ -68,7 +68,6 @@ namespace Futbal.Mng.Infrastructure.GameManagement
             
             return mappedGame;
         }
-
         public async Task UpdateGamePlace(Guid id, PlaceDto newAddress)
         {
             await _gameRepository.UpdatePlace(id, Address.Create(newAddress.Street, newAddress.Number));
@@ -85,9 +84,16 @@ namespace Futbal.Mng.Infrastructure.GameManagement
 
             foreach (var mappedGame in mappedGames)
             {
-                mappedGame.AvailableAttendees = userGames.FirstOrDefault(x => x.Id == mappedGame.Id).Attendees.Where(x => x.IsAvailable == true).Count();
+                mappedGame.AvailableAttendees = userGames
+                    .FirstOrDefault(x => x.Id == mappedGame.Id)
+                    .Attendees.Where(x => x.IsAvailable == true)
+                    .Count();
+
                 mappedGame.RequiredAttendees = 14;
-                mappedGame.TotalAttendees = userGames.FirstOrDefault(x => x.Id == mappedGame.Id).Attendees.Count();
+                mappedGame.TotalAttendees = userGames
+                    .FirstOrDefault(x => x.Id == mappedGame.Id)
+                    .Attendees
+                    .Count();
             }
 
             return mappedGames;

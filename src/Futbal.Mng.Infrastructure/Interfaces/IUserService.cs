@@ -7,6 +7,8 @@ namespace Futbal.Mng.Infrastructure.Interfaces
 {
     public interface IUserService
     {
+        Task<IEnumerable<UserDto>> GetAllUsers();
+
          Task<GameDetailsDto> GetAsync(Guid id);
 
          Task CreateUser(UserDto userDto);

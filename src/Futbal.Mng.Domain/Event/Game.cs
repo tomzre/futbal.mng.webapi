@@ -54,7 +54,7 @@ namespace Futbal.Mng.Domain.Event
                 if(newAddress.Equals(Place))
                     return false;
             }
-            
+
             Place = newAddress;
             SetUpdatedOn();
             return true;
