@@ -1,10 +1,10 @@
-FROM mcr.microsoft.com/dotnet/core/aspnet:2.2 AS base
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.0 AS base
 WORKDIR /app
 EXPOSE 5000
 EXPOSE 6010
 EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/core/sdk:2.2 AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:3.0 AS build
 WORKDIR /src
 COPY ["src/Futbal.Mng.Api/Futbal.Mng.Api.csproj", "src/Futbal.Mng.Api/"]
 COPY ["src/Futbal.Mng.Infrastructure/Futbal.Mng.Infrastructure.csproj", "src/Futbal.Mng.Infrastructure/"]
