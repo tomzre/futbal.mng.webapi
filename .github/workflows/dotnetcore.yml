@@ -14,49 +14,18 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 3.0.100
+        dotnet-version: 2.2.108
     - name: Build with dotnet
       run: dotnet test
-  
-on: [pull_request]
-
-jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    
-    - uses: azure/container-actions/docker-login@master
-      with:
-        login-server: crtrepgames.azurecr.io
-        username: ${{ secrets.REGISTRY_USERNAME }}
-        password: ${{ secrets.REGISTRY_PASSWORD }}
-    
-    - run: |
-        docker build . -t crtrepgames.azurecr.io/futbalwebapi:${{ github.sha }}
-        docker push crtrepgames.azurecr.io/futbalwebapi:${{ github.sha }}
-      
-    # Set the target AKS cluster. 
-    - uses: azure/k8s-actions/aks-set-context@master
-      with:
-        creds: '${{ secrets.AZURE_CREDENTIALS }}'
-        cluster-name: contoso
-        resource-group: contoso-rg
-        
-    - uses: azure/k8s-actions/k8s-create-secret@master
-      with:
-        container-registry-url: crtrepgames.azurecr.io
-        container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
-        container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
-        secret-name: demo-k8s-secret
-
-    - uses: azure/k8s-actions/k8s-deploy@master
-      with:
-        manifests: |
-          manifests/deployment.yml
-          manifests/service.yml
-        images: |
-          crtrepgames.azurecr.io/futbalwebapi:${{ github.sha }}
-        imagepullsecrets: |
-          demo-k8s-secret
-    
+    - uses: actions/checkout@v1
+    - name: Build with docker
+      run: docker build . -t tomzreacr.azurecr.io/futbalapi 
+    - name: login to CR
+      run: docker login -u tomzreacr -p $CI_REGISTRY_TOKEN tomzreacr.azurecr.io
+      env:
+          CI_REGISTRY_TOKEN: ${{ secrets.CONTAINER_PWD }}
+    - name: push to CR
+      run: docker push tomzreacr.azurecr.io/futbalapi
