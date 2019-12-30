@@ -1,5 +1,5 @@
 
-
+--Server=tcp:tomzredb-server1.database.windows.net,1433;Initial Catalog=tomzredb;Persist Security Info=False;User ID=futadmin;Password={your_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
 CREATE DATABASE FutbalMng
 
 USE FutbalMng

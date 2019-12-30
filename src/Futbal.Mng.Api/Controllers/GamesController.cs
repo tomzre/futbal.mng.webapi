@@ -20,6 +20,12 @@ namespace Futbal.Mng.Api.Controllers
             _commandBus = commandBus;
         }
 
+        [HttpGet]
+        public async Task<string> ServiceEndpoint()
+        {
+            return "games-management-service";
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddNewGame(CreateNewGameCommand command)
         {

@@ -1,12 +1,14 @@
-name: .NET Core
+name: build
 
-on: [push]
-
+on:
+  push:
+    branches:
+    - master
+    - add-docker-compose
+    
 jobs:
-  build:
-
+  test:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v1
     - name: Setup .NET Core

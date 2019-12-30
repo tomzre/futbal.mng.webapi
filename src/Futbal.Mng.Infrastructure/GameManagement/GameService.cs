@@ -77,6 +77,9 @@ namespace Futbal.Mng.Infrastructure.GameManagement
         {
             var userGames = await _gameRepository.GetUserGames(userId);
 
+            if(userGames == null)
+                return new List<GameDetailsGridDto>();
+
             var mappedGames = _mapper.Map<IList<GameDetailsGridDto>>(userGames);
 
             foreach (var mappedGame in mappedGames)
