@@ -12,7 +12,7 @@ GET http://localhost:5000/api/games
 
 
 ### both are get user games.
-GET https://localhost:6010/api/users/5ebbf591-f261-4a7c-ab76-82e4d5cfebe0/mygames
+GET http://localhost:5000/api/users/82dbe0ec-770f-4be0-ae9f-e8727f81c00d/games
 
 ### cerate user. temporary in this service.
 
