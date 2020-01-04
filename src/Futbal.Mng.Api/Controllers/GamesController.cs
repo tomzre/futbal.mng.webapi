@@ -65,10 +65,11 @@ namespace Futbal.Mng.Api.Controllers
             return Ok();
         }
 
-        [HttpPut("{id}/attendees/{attendeeId}/available")]
-        public async Task<IActionResult> UpdateAttendeeAvailability(Guid id, SetAvailabilityDto availability)
+        [HttpPut("{id}/attendees/available")]
+        public async Task<IActionResult> UpdateAttendeeAvailability(Guid id, SetAttendeeAvailabilityCommand cmd)
         {
-            await _gameService.SetAttendeeAvailability(id, availability);
+            cmd.GameId = id;
+            await _commandBus.SendCommandAsync(cmd);
             return Ok();
         }
     }

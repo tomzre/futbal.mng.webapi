@@ -51,13 +51,5 @@ namespace Futbal.Mng.Infrastructure.GameManagement
 
             return mappedGames;
         }
-
-        public async Task SetAttendeeAvailability(Guid id, SetAvailabilityDto availability)
-        {
-            var user = await _userRepository.GetUser(availability.UserId);
-            user.SetAvailability(availability.UserId, id,  availability.IsAvailable);
-
-            await _userRepository.UpdateAsync(user);
-        }
     }
 }

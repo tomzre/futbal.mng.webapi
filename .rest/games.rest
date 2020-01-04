@@ -45,6 +45,7 @@ content-type: application/json
     "newAttendeeId": "82dbe0ec-770f-4be0-ae9f-e8727f81c00d"
 }
 ###
+# get game
 GET http://localhost:5000/api/games/d5c93501-c17c-4ab7-1193-08d7915961c5
 
 ###
@@ -55,4 +56,14 @@ content-type: application/json
 {
     "street": "tyniecka",
     "number": 39
+}
+
+###
+#set availability 
+PUT http://localhost:5000/api/games/d5c93501-c17c-4ab7-1193-08d7915961c5/attendees/available HTTP/1.1
+content-type: application/json
+
+{
+    "userId": "82dbe0ec-770f-4be0-ae9f-e8727f81c00d",
+    "isAvailable": true
 }
