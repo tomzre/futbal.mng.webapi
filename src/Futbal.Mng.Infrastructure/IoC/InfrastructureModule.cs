@@ -44,18 +44,18 @@ namespace Futbal.Mng.Infrastructure.IoC
                 .AsClosedTypesOf(typeof(IHandleCommand<>))
                 .InstancePerLifetimeScope();
 
-            builder.RegisterType<CommandBus>()
-                .As<ICommandBus>()
-                .InstancePerLifetimeScope();
-
             builder.RegisterAssemblyTypes(assembly)
                 .AsClosedTypesOf(typeof(IHandleQuery<,>))
                 .InstancePerLifetimeScope();
 
+            builder.RegisterType<CommandBus>()
+                .As<ICommandBus>()
+                .InstancePerLifetimeScope();
+
+
             builder.RegisterType<QueryBus>()
                 .As<IQueryBus>()
                 .InstancePerLifetimeScope();
-            
         }
 
     }

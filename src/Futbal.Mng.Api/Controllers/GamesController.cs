@@ -43,7 +43,7 @@ namespace Futbal.Mng.Api.Controllers
         {
             var query = new GetGameQuery(id);
             
-            var game = await _queryBus.Dispatch(query);
+            var game = await _queryBus.DispatchAsync<GetGameQuery, GameDetailsDto>(query);
             
             return Ok(game);
         }
