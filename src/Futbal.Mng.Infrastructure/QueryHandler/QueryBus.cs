@@ -14,13 +14,13 @@ namespace Futbal.Mng.Infrastructure.QueryHandler
             _componentContext = componentContext;
         }
 
-        public async Task<TResult> DispatchAsync<TQuery, TResult>(TQuery query) where TQuery: IQuery<TResult> where TResult: IQueryResult
+        public async Task<TResult> DispatchAsync<TQuery, TResult>(TQuery query) where TQuery: IQuery<TResult>
         {
             if(query == null)
             {
                 throw new ArgumentNullException(nameof(query), $"Command: '{typeof(TQuery).Name} cannot be null'");
             }
-            
+
             var handler = _componentContext.Resolve<IHandleQuery<TQuery, TResult>>();
             return await handler.HandleAsync(query);
         }
