@@ -4,6 +4,8 @@ using Futbal.Mng.Infrastructure.Commands;
 using Futbal.Mng.Infrastructure.DTO;
 using Futbal.Mng.Infrastructure.Interfaces;
 using Futbal.Mng.Infrastructure.Interfaces.CommandHandler;
+using Futbal.Mng.Infrastructure.Interfaces.QueryHandler;
+using Futbal.Mng.Infrastructure.QueryHandler;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Futbal.Mng.Api.Controllers
@@ -13,11 +15,14 @@ namespace Futbal.Mng.Api.Controllers
     {
         private readonly IGameService _gameService;
         private readonly ICommandBus _commandBus;
+        
+        private readonly IQueryBus _queryBus;
 
-        public GamesController(ICommandBus commandBus)
+        public GamesController(ICommandBus commandBus, IQueryBus queryBus)
         {
             
             _commandBus = commandBus;
+            _queryBus = queryBus;
         }
 
         [HttpGet]
@@ -33,10 +38,13 @@ namespace Futbal.Mng.Api.Controllers
             return Ok();
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}")]//query
         public async Task<IActionResult> GetGame(Guid id)
         {
-            var game = await _gameService.GetAsync(id);
+            var query = new GetGameQuery(id);
+            
+            var game = await _queryBus.DispatchAsync<GetGameQuery, GameDetailsDto>(query);
+            
             return Ok(game);
         }
 

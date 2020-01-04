@@ -27,13 +27,13 @@ content-type: application/json
 
 ### create new game (address can be added)
 
-POST https://localhost:443/api/games HTTP/1.1
+POST http://localhost:5000/api/games HTTP/1.1
 content-type: application/json
 
 {
     "name": "new-game2",
     "gameDate": "2019-07-28",
-    "ownerId": "8231e479-a96c-4a73-9822-83cf988f71da"
+    "ownerId": "82dbe0ec-770f-4be0-ae9f-e8727f81c00d"
 }
 
 ###
@@ -42,7 +42,7 @@ PUT https://localhost:6010/api/games/e6ac5143-d58b-48a8-26e5-08d711fc5926/attend
 content-type: application/json
 
 ###
-GET https://localhost:6010/api/games/e6ac5143-d58b-48a8-26e5-08d711fc5926
+GET http://localhost:5000/api/games/1efb4d83-ea32-4c9a-94a8-08d76613d12a
 
 ###
 #update place

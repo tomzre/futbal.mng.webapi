@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using Futbal.Mng.Infrastructure.QueryHandler;
 
 namespace Futbal.Mng.Infrastructure.DTO
 {
-    public class GameDetailsDto
+    public class GameDetailsDto: IQueryResult
     {
         public Guid Id { get; set; }
 
