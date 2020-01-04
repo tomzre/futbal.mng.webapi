@@ -38,7 +38,7 @@ namespace Futbal.Mng.Api.Controllers
             return Ok();
         }
 
-        [HttpGet("{id}")]//query
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetGame(Guid id)
         {
             var query = new GetGameQuery(id);

@@ -31,18 +31,6 @@ namespace Futbal.Mng.Infrastructure.GameManagement
             return await _context.Games.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task UpdatePlace(Guid gameId, Address newPlace)
-        {
-            var game = _context.Games
-                .FirstOrDefault(x => x.Id == gameId);
-            
-            if(!game.UpdatePlace(newPlace))
-                return;
-                
-            _context.Games.Update(game);
-            await _context.SaveChangesAsync();
-        }
-
         public async Task<Game> GetAsync(Guid id)
         {
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(1000);

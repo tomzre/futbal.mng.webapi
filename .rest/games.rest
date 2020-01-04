@@ -49,7 +49,7 @@ GET http://localhost:5000/api/games/d5c93501-c17c-4ab7-1193-08d7915961c5
 
 ###
 #update place
-PUT https://localhost:6010/api/games/6d1e237d-d9ed-4b46-39d5-08d75edf11a9/places HTTP/1.1
+PUT http://localhost:5000/api/games/d5c93501-c17c-4ab7-1193-08d7915961c5/places HTTP/1.1
 content-type: application/json
 
 {
