@@ -13,7 +13,6 @@ namespace Futbal.Mng.Api.Controllers
     
     public class GamesController : ApiBaseController
     {
-        private readonly IGameService _gameService;
         private readonly ICommandBus _commandBus;
         
         private readonly IQueryBus _queryBus;
