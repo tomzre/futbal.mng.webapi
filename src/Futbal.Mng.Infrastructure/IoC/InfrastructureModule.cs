@@ -3,6 +3,8 @@ using Autofac;
 using AutoMapper;
 using Futbal.Mng.Infrastructure.CommandHandler;
 using Futbal.Mng.Infrastructure.Interfaces.CommandHandler;
+using Futbal.Mng.Infrastructure.Interfaces.QueryHandler;
+using Futbal.Mng.Infrastructure.QueryHandler;
 
 namespace Futbal.Mng.Infrastructure.IoC
 {
@@ -44,6 +46,14 @@ namespace Futbal.Mng.Infrastructure.IoC
 
             builder.RegisterType<CommandBus>()
                 .As<ICommandBus>()
+                .InstancePerLifetimeScope();
+
+            builder.RegisterAssemblyTypes(assembly)
+                .AsClosedTypesOf(typeof(IHandleQuery<,>))
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<QueryBus>()
+                .As<IQueryBus>()
                 .InstancePerLifetimeScope();
             
         }
