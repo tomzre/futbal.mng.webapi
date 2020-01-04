@@ -18,8 +18,6 @@ namespace Futbal.Mng.Domain.Event
 
          Task<Game> GetGame(Guid id);
 
-         Task AddAttendee(Guid gameId, User attendee);
-
          Task<ICollection<Game>> GetUserGames(Guid userId);
     }
 }

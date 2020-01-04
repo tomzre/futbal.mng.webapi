@@ -7,13 +7,6 @@ namespace Futbal.Mng.Infrastructure.Interfaces
 {
     public interface IGameService
     {
-        Task AddNewGame(GameDto newGame);
-        Task<GameDetailsDto> GetAsync(Guid id);
-
-        Task AddAttendee(Guid gameId, Guid newAttendeeId);
-
-        Task UpdateGamePlace(Guid id, PlaceDto newAddress);
-
         Task<IEnumerable<GameDetailsGridDto>> GetUserGames(Guid userId);
 
         Task SetAttendeeAvailability(Guid id, SetAvailabilityDto availability);

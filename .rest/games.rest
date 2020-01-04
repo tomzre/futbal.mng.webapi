@@ -1,5 +1,5 @@
 ##Get all users
-GET https://localhost:6010/api/users
+GET http://localhost:5000/api/users HTTP/1.1
 
 ### getall
 GET https://localhost:6010/api/users/8231e479-a96c-4a73-9822-83cf988f71da/mygames
@@ -38,11 +38,14 @@ content-type: application/json
 
 ###
 
-PUT https://localhost:6010/api/games/e6ac5143-d58b-48a8-26e5-08d711fc5926/attendees/266cad8a-c1f0-428a-9801-84ce5ed7ab2a HTTP/1.1
+PUT http://localhost:5000/api/games/d5c93501-c17c-4ab7-1193-08d7915961c5/attendees HTTP/1.1
 content-type: application/json
 
+{
+    "newAttendeeId": "82dbe0ec-770f-4be0-ae9f-e8727f81c00d"
+}
 ###
-GET http://localhost:5000/api/games/1efb4d83-ea32-4c9a-94a8-08d76613d12a
+GET http://localhost:5000/api/games/d5c93501-c17c-4ab7-1193-08d7915961c5
 
 ###
 #update place

@@ -48,10 +48,11 @@ namespace Futbal.Mng.Api.Controllers
             return Ok(game);
         }
 
-        [HttpPut("{id}/attendees/{newAttendeeId}")]
-        public async Task<IActionResult> AddAttendeeToGame(Guid id, Guid newAttendeeId)
+        [HttpPut("{id}/attendees")]
+        public async Task<IActionResult> AddAttendeeToGame(Guid id, AddAttendeeToTheGameCommand cmd)
         {
-            await _gameService.AddAttendee(id, newAttendeeId);
+            cmd.GameId = id;
+            await _commandBus.SendCommandAsync(cmd);
 
             return Ok();
         }

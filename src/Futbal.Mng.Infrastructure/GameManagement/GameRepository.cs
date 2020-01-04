@@ -31,15 +31,6 @@ namespace Futbal.Mng.Infrastructure.GameManagement
             return await _context.Games.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task AddAttendee(Guid gameId, User attendee)
-        {
-            var game = await _context.Games.FirstOrDefaultAsync(x => x.Id ==gameId);
-
-            game.AddAttendee(attendee);
-
-            await _context.SaveChangesAsync();
-        }
-
         public async Task UpdatePlace(Guid gameId, Address newPlace)
         {
             var game = _context.Games
@@ -68,12 +59,13 @@ namespace Futbal.Mng.Infrastructure.GameManagement
                 .Include(x => x.Owner)
                 .Include(x => x.Attendees)
                 .ThenInclude(x => x.User)
-                .Where(x => x.Owner.Id == userId || x.Attendees.Any(y => y.UserId == userId)).ToListAsync();
+                .Where(x => x.Owner.Id == userId || x.Attendees.Any(y => y.UserId == userId))
+                .ToListAsync();
         }
 
-        public Task UpdateAsync(Game game)
+        public async Task UpdateAsync(Game game)
         {
-            throw new NotImplementedException();
+            await _context.SaveChangesAsync();
         }
     }
 }

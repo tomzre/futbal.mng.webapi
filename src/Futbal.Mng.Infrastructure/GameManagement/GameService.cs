@@ -25,54 +25,7 @@ namespace Futbal.Mng.Infrastructure.GameManagement
             _mapper = mapper;
             _gameRepository = gameRepository;
         }
-
-        public async Task AddAttendee(Guid gameId, Guid newAttendeeId)
-        {
-            var user = await _userRepository.GetUser(newAttendeeId);
-            await _gameRepository.AddAttendee(gameId, user);
-        }
-
-        public async Task AddNewGame(GameDto newGame)
-        {
-            if(newGame.OwnerId == Guid.Empty)
-            {
-                throw new ArgumentException("Owner id is empty. Cannot create game");
-            }
-            var owner = await _userRepository.GetUser(newGame.OwnerId);
-
-            if(owner == null)
-            {
-                throw new ArgumentNullException($"Cannot find user for given id: {newGame.OwnerId}");
-            }
-            Address address = null;
-            if(newGame.Address != null)
-                address = Address.Create(newGame.Address.Street, newGame.Address.Number);
-            var game = new Game(newGame.Name, newGame.GameDate, owner);
-            game.UpdatePlace(address);
-            await _gameRepository.AddGame(game);
-        }
-
-        public async Task<GameDetailsDto> GetAsync(Guid id)
-        {
-            var game = await _gameRepository.GetAsync(id);
-
-            var mappedGame = _mapper.Map<GameDetailsDto>(game);
-
-            mappedGame.Attendees = game.Attendees.Select(x =>  
-            new AttendeeDto{ 
-                IsAvailable = x.IsAvailable,
-                LastName = x.User?.Username,
-                FirstName = x.User?.Email,
-                Id = x.UserId
-                });
-            
-            return mappedGame;
-        }
-        public async Task UpdateGamePlace(Guid id, PlaceDto newAddress)
-        {
-            await _gameRepository.UpdatePlace(id, Address.Create(newAddress.Street, newAddress.Number));
-        }
-
+        
         public async Task<IEnumerable<GameDetailsGridDto>> GetUserGames(Guid userId)
         {
             var userGames = await _gameRepository.GetUserGames(userId);
