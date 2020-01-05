@@ -32,7 +32,7 @@ namespace Tests
         }
 
         [Test]
-        public async Task GetUserGames_ShouldReturn_AllGamesThatUserBePartOf()
+        public async Task GetUserGames_ShouldReturn_AllGamesThatUserISPartOf()
         {
            
         }

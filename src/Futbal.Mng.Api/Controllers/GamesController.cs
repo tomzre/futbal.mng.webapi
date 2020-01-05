@@ -25,7 +25,7 @@ namespace Futbal.Mng.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<string> ServiceEndpoint()
+        public string ServiceEndpoint()
         {
             return "games-management-service";
         }
