@@ -14,11 +14,7 @@ namespace Futbal.Mng.Domain.Event
         
          Task UpdateAsync(Game game);
 
-         Task UpdatePlace(Guid gameId, Address newPlace);
-
          Task<Game> GetGame(Guid id);
-
-         Task AddAttendee(Guid gameId, User attendee);
 
          Task<ICollection<Game>> GetUserGames(Guid userId);
     }

@@ -4,7 +4,7 @@ using Futbal.Mng.Infrastructure.QueryHandler;
 
 namespace Futbal.Mng.Infrastructure.DTO
 {
-    public class GameDetailsDto: IQueryResult
+    public class GameDetailsDto
     {
         public Guid Id { get; set; }
 

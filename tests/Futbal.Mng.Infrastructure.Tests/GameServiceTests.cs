@@ -32,23 +32,9 @@ namespace Tests
         }
 
         [Test]
-        public async Task GetUserGames_ShouldReturn_AllGamesThatUserBePartOf()
+        public async Task GetUserGames_ShouldReturn_AllGamesThatUserISPartOf()
         {
-            //this test doesnt make any sense :) just here for no reason.
-            //Arrange
-            _gameRepoMock.Setup(m => m.GetUserGames(It.IsAny<Guid>()))
-                .ReturnsAsync(new List<Game>());
-                
-            _mapper.Setup(m => m.Map<IList<GameDetailsGridDto>>(It.IsAny<object>()))
-                .Returns(new List<GameDetailsGridDto>());
-            
-            var sut = new GameService(_gameRepoMock.Object, _userRepoMock.Object, _mapper.Object);
-
-            //Act
-            var result = await sut.GetUserGames(It.IsAny<Guid>());
-            
-            //Assert
-            Assert.AreEqual(0, result.Count());
+           
         }
     }
 }

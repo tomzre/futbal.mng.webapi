@@ -13,15 +13,6 @@ namespace Futbal.Mng.Infrastructure.CommandHandler
         {
             _componentContext = componentContext;
         }
-        public void SendCommand<T>(T cmd) where T : ICommand
-        {
-            if(cmd == null)
-            {
-                throw new ArgumentNullException(nameof(cmd), $"Command: '{typeof(T).Name} cannot be null'");
-            }
-            var handler = _componentContext.Resolve<IHandleCommand<T>>();
-            handler.Handle(cmd);
-        }
 
         public async Task SendCommandAsync<T>(T cmd) where T : ICommand
         {

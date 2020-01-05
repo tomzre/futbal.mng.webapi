@@ -14,14 +14,16 @@ namespace Futbal.Mng.Infrastructure.CommandHandler
             _gameRepository = gameRepository;
 
         }
-        public void Handle(ChangeGamePlaceCommand command)
-        {
-            throw new System.NotImplementedException();
-        }
 
         public async Task HandleAsync(ChangeGamePlaceCommand command)
         {
-            await _gameRepository.UpdatePlace(command.GameId, Address.Create(command.Street, command.Number));
+            var newAddress = Address.Create(command.Street, command.Number);
+            
+            var game = await _gameRepository.GetAsync(command.GameId);
+
+            game.UpdatePlace(newAddress);
+
+            await _gameRepository.UpdateAsync(game);
         }
     }
 }

@@ -13,7 +13,6 @@ namespace Futbal.Mng.Api.Controllers
     
     public class GamesController : ApiBaseController
     {
-        private readonly IGameService _gameService;
         private readonly ICommandBus _commandBus;
         
         private readonly IQueryBus _queryBus;
@@ -26,7 +25,7 @@ namespace Futbal.Mng.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<string> ServiceEndpoint()
+        public string ServiceEndpoint()
         {
             return "games-management-service";
         }
@@ -38,7 +37,7 @@ namespace Futbal.Mng.Api.Controllers
             return Ok();
         }
 
-        [HttpGet("{id}")]//query
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetGame(Guid id)
         {
             var query = new GetGameQuery(id);
@@ -48,10 +47,11 @@ namespace Futbal.Mng.Api.Controllers
             return Ok(game);
         }
 
-        [HttpPut("{id}/attendees/{newAttendeeId}")]
-        public async Task<IActionResult> AddAttendeeToGame(Guid id, Guid newAttendeeId)
+        [HttpPut("{id}/attendees")]
+        public async Task<IActionResult> AddAttendeeToGame(Guid id, AddAttendeeToTheGameCommand cmd)
         {
-            await _gameService.AddAttendee(id, newAttendeeId);
+            cmd.GameId = id;
+            await _commandBus.SendCommandAsync(cmd);
 
             return Ok();
         }
@@ -64,10 +64,11 @@ namespace Futbal.Mng.Api.Controllers
             return Ok();
         }
 
-        [HttpPut("{id}/attendees/{attendeeId}/available")]
-        public async Task<IActionResult> UpdateAttendeeAvailability(Guid id, SetAvailabilityDto availability)
+        [HttpPut("{id}/attendees/available")]
+        public async Task<IActionResult> UpdateAttendeeAvailability(Guid id, SetAttendeeAvailabilityCommand cmd)
         {
-            await _gameService.SetAttendeeAvailability(id, availability);
+            cmd.GameId = id;
+            await _commandBus.SendCommandAsync(cmd);
             return Ok();
         }
     }

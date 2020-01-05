@@ -2,7 +2,7 @@ using System;
 
 namespace Futbal.Mng.Infrastructure.DTO
 {
-    public class GameDetailsGridDto
+    public class UserGamesListDto
     {
         public Guid Id { get; set; }
 
