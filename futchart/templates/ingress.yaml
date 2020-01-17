@@ -30,8 +30,8 @@ spec:
     - host: {{ .host | quote }}
       http:
         paths:
-        - path: /api
+        - path: /(api)(/|$)(.*)
           backend:
-            serviceName: futbalapi
+            serviceName: futbalmng-futchart
             servicePort: 5000
 {{- end }}
