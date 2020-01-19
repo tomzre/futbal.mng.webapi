@@ -32,6 +32,6 @@ spec:
         paths:
         - path: /(api)(/|$)(.*)
           backend:
-            serviceName: futbalmng-futchart
+            serviceName: futbalapi-futchart
             servicePort: 5000
 {{- end }}
