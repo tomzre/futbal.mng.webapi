@@ -2,7 +2,9 @@
 --Server=tcp:tomzredb-server1.database.windows.net,1433;Initial Catalog=tomzredb;Persist Security Info=False;User ID=futadmin;Password={your_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
 CREATE DATABASE FutbalMng
 
-USE FutbalMng
+CREATE DATABASE FutbalMngAuth
+
+USE FutbalMngAuth
 
  --user 
 CREATE TABLE users (
@@ -24,7 +26,6 @@ WHERE database_id  = db_id('FutbalMng')
 EXEC(@kill);
 
 
-CREATE USER futadmin for login futadmin
 
 
 CREATE LOGIN futadmin WITH PASSWORD ='Fut@dm1npass'
@@ -34,9 +35,9 @@ EXEC sp_addsrvrolemember
     @loginame = N'futadmin', 
     @rolename = N'sysadmin';
 
-USE FutbalMng
+USE FutbalMngAuth
 GRANT INSERT ON OBJECT::users TO futadmin
-USE FutbalMng
+USE FutbalMngAuth
 GRANT SELECT ON OBJECT::users TO futadmin
 
 USE FutbalMng
@@ -54,5 +55,10 @@ select * from address
 SELECT * FROM INFORMATION_SCHEMA.TABLES 
 WHERE TABLE_TYPE='BASE TABLE'
 
+SELECT name, database_id, create_date  
+FROM sys.databases ;  
+
 select
 * from sys.database_permissions
+
+select * from dbo.DeviceCodes
