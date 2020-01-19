@@ -8,8 +8,9 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: 'Deploy'
-      uses: 'deliverybot/helm@master'
+      uses: 'deliverybot/helm@v1'
       with:
+        helm: helm3
         namespace: 'default'
         secrets: '${{ toJSON(secrets) }}'
         chart: 'futchart'
