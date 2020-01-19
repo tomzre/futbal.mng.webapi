@@ -27,7 +27,7 @@ namespace Futbal.Mng.Api.Controllers
         [HttpGet]
         public string ServiceEndpoint()
         {
-            return "games-management-service";
+            return "games-management-service-test";
         }
 
         [HttpPost]
