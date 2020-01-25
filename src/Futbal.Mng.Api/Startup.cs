@@ -26,6 +26,7 @@ namespace Futbal.Mng.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            services.AddHealthChecks();
             services.AddCors(options =>
         {
             options.AddPolicy("default",
@@ -77,6 +78,8 @@ namespace Futbal.Mng.Api
             app.UseEndpoints(endpoints => 
             {
                 endpoints.MapGrpcService<GameResponse>();
+                endpoints.MapHealthChecks("/health");
+
             });
         }
     }

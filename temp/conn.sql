@@ -53,12 +53,20 @@ USE FutbalMng
 select * from address
 
 SELECT * FROM INFORMATION_SCHEMA.TABLES 
+SELECT * FROM ClientCorsOrigins
+select * from Clients
 WHERE TABLE_TYPE='BASE TABLE'
+
+update Clients set ClientUri = 'http://localhost:3000' where id =1
+insert into ClientCorsOrigins(Origin, ClientId)
+VALUES('http://localhost:3000', 1)
 
 SELECT name, database_id, create_date  
 FROM sys.databases ;  
 
 select
 * from sys.database_permissions
+
+select * from AspNetUsers
 
 select * from dbo.DeviceCodes
