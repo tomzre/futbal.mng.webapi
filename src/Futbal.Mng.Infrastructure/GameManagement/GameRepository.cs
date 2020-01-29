@@ -22,8 +22,6 @@ namespace Futbal.Mng.Infrastructure.GameManagement
         public async Task AddGame(Game newGame)
         {
             _context.Games.Add(newGame);
-
-            await _context.SaveChangesAsync();
         }
 
         public async Task<Game> GetGame(Guid id)

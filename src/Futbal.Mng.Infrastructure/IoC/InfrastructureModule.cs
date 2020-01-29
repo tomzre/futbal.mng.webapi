@@ -2,7 +2,9 @@ using System.Collections.Generic;
 using Autofac;
 using AutoMapper;
 using Futbal.Mng.Infrastructure.CommandHandler;
+using Futbal.Mng.Infrastructure.EF;
 using Futbal.Mng.Infrastructure.Interfaces.CommandHandler;
+using Futbal.Mng.Infrastructure.Interfaces.EventHandler;
 using Futbal.Mng.Infrastructure.Interfaces.QueryHandler;
 using Futbal.Mng.Infrastructure.QueryHandler;
 
@@ -29,6 +31,10 @@ namespace Futbal.Mng.Infrastructure.IoC
             builder.Register(c => c.Resolve<MapperConfiguration>().CreateMapper(c.Resolve))
                 .As<IMapper>()
                 .InstancePerLifetimeScope();
+
+            builder.RegisterType<UnitOfWork>()
+                .As<IUnitOfWork>()
+                .InstancePerLifetimeScope();
         
             builder.RegisterAssemblyTypes(assembly)
                 .Where(x => x.Name.EndsWith("Service"))
@@ -52,11 +58,13 @@ namespace Futbal.Mng.Infrastructure.IoC
                 .As<ICommandBus>()
                 .InstancePerLifetimeScope();
 
-
             builder.RegisterType<QueryBus>()
                 .As<IQueryBus>()
                 .InstancePerLifetimeScope();
-        }
 
+            builder.RegisterAssemblyTypes(assembly)
+                .AsClosedTypesOf(typeof(IHandleEvent<>))
+                .InstancePerMatchingLifetimeScope();
+        }
     }
 }

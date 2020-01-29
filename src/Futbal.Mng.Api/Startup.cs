@@ -2,6 +2,7 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Futbal.Mng.Infrastructure.EF;
+using Futbal.Mng.Infrastructure.EventHandler.Events;
 using Futbal.Mng.Infrastructure.IoC;
 using Futbal.Mng.Webapi;
 using Microsoft.AspNetCore.Builder;
@@ -38,6 +39,7 @@ namespace Futbal.Mng.Api
                 cfg.AllowAnyHeader();
             });
         });
+            DomainEvents.Init();
             services.AddEntityFrameworkSqlServer()
                 .AddDbContext<FutbalMngContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("FutbalMngDatabase"),

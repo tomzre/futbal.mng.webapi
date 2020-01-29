@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Futbal.Mng.Domain.Event.Events;
 using Futbal.Mng.Domain.UserManagement;
 using Futbal.Mng.Domain.ValueObjects;
 
 namespace Futbal.Mng.Domain.Event
 {
-    public class Game
+    public class Game : AggragateRoot
     {
         private ICollection<UserGame> _attendees = new HashSet<UserGame>();
 
@@ -34,6 +35,7 @@ namespace Futbal.Mng.Domain.Event
             GameDate = gameDate;
             Owner = owner;
             CreatedOn = DateTime.UtcNow;
+            AddDomainEvent(new GameCreatedEvent(Id, owner.Username, name));
         }
 
         public void UpdateGameDate(DateTime gameDate)

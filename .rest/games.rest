@@ -16,7 +16,7 @@ GET http://localhost:5000/api/users/82dbe0ec-770f-4be0-ae9f-e8727f81c00d/games
 
 ### cerate user. temporary in this service.
 
-POST http://localhost:5000/api/users HTTP/1.1
+POST http://localhost:5001/api/users HTTP/1.1
 content-type: application/json
 
 {
@@ -27,13 +27,13 @@ content-type: application/json
 
 ### create new game (address can be added)
 
-POST http://localhost:5000/api/games HTTP/1.1
+POST http://localhost:5001/api/games HTTP/1.1
 content-type: application/json
 
 {
-    "name": "new-game2",
+    "name": "new-game34123",
     "gameDate": "2019-07-28",
-    "ownerId": "82dbe0ec-770f-4be0-ae9f-e8727f81c00d"
+    "ownerId": "2b1e4db0-689e-4cde-9e2e-f994b4603ca7"
 }
 
 ###
