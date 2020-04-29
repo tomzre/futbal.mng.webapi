@@ -17,12 +17,9 @@ namespace Futbal.Mng.Domain.Event
 
         private UserGame() { }
 
-        public UserGame(Game game, User user)
-        {
-            Game = game;
-            User = user;
-        }
-
+        public UserGame(Game game, User user) =>
+        (Game, User) = (game, user);
+        
         public void SetUserAvailability(bool isAvailable)
         {
             IsAvailable = isAvailable;

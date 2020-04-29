@@ -30,7 +30,6 @@ namespace Futbal.Mng.Infrastructure.GameManagement
         {
             return await _context.Games.FirstOrDefaultAsync(x => x.Id == id);
         }
-
         public async Task<Game> GetAsync(Guid id)
         {
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(1000);

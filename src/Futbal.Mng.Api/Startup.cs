@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Futbal.Mng.Api
 {
@@ -21,7 +22,7 @@ namespace Futbal.Mng.Api
         }
 
         public IConfiguration Configuration { get; }
-        public IContainer ApplicationContainer { get; private set;}
+        public IContainer ApplicationContainer { get; private set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
@@ -42,13 +43,17 @@ namespace Futbal.Mng.Api
                 .AddDbContext<FutbalMngContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("FutbalMngDatabase"),
                     m => m.MigrationsAssembly("Futbal.Mng.Infrastructure")));
-            services.AddMvc(mvcOptions => {
+            services.AddMvc(mvcOptions =>
+            {
                 mvcOptions.EnableEndpointRouting = false;
             })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
                 .AddControllersAsServices();
             services.AddGrpc();
 
+            // var sp = services.BuildServiceProvider();
+            // var context = sp.GetRequiredService<FutbalMngContext>();
+            // context.Database.Migrate();
 
             var builder = new ContainerBuilder();
 
@@ -56,7 +61,7 @@ namespace Futbal.Mng.Api
             builder.RegisterModule<InfrastructureModule>();
             ApplicationContainer = builder.Build();
 
-            return new AutofacServiceProvider(ApplicationContainer);            
+            return new AutofacServiceProvider(ApplicationContainer);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,11 +76,18 @@ namespace Futbal.Mng.Api
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetService <FutbalMngContext>();
+                context.Database.Migrate();
+            }
+
             app.UseCors("default");
             app.UseRouting();
             //app.UseHttpsRedirection();
             app.UseMvc();
-            app.UseEndpoints(endpoints => 
+            app.UseEndpoints(endpoints =>
             {
                 endpoints.MapGrpcService<GameResponse>();
                 endpoints.MapHealthChecks("/health");

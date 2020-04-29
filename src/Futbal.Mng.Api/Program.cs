@@ -8,6 +8,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace Futbal.Mng.Api
 {
@@ -32,6 +33,7 @@ namespace Futbal.Mng.Api
                     .AddJsonFile($"./appsettings.{ctx.HostingEnvironment.EnvironmentName}.json", optional: false)
                     .AddEnvironmentVariables();
                 })
-                .UseStartup<Startup>();
+                .UseStartup<Startup>()
+                .UseSerilog();
     }
 }
