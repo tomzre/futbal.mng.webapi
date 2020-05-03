@@ -1,17 +1,37 @@
-version: "3"
+version: '3.5'
+
 services:
-    web:
-      build: .
-      environment:
-        - ASPNETCORE_ENVIRONMENT=Development
-      ports:
-      # Replace the values on the left by the values on your launchSettings.json
-        - "5000:5000"
-        - "6010:443"
-        # depends_on:
-        #     - db
-    # db:
-    #     image: "mcr.microsoft.com/mssql/server"
-    #     environment:
-    #         SA_PASSWORD: "Your_password123"
-    #         ACCEPT_EULA: "Y"
+  futbalmngapi:
+    container_name: futbalmngapi
+    image: futbalmng/dokeapi
+    build:
+      context: .
+      dockerfile: Dockerfile.debug
+    ports:
+      - 5001:5001
+    networks:
+      - futbalmng
+    volumes:
+      - './:/app'
+  
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - 5672:5672
+      - 15672:15672
+    networks:
+      - futbalmng
+
+    # network_mode: host
+    volumes: 
+      - rabbitmq:/var/lib/rabbitmq
+
+networks:
+  futbalmng:
+    name: futbal-network
+
+volumes:
+  rabbitmq:
+    driver: local

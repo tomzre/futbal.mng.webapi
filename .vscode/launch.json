@@ -38,6 +38,26 @@
             "netCore": {
                 "appProject": "${workspaceFolder}/src/Futbal.Mng.Api/Futbal.Mng.Api.csproj"
             }
+        },
+        {
+            "name": ".NET Core Attach Docker",
+            "type": "coreclr",
+            "request": "attach",
+            "processId": "${command:pickRemoteProcess}",
+            "sourceFileMap": {
+                "/app": "${workspaceRoot}/"
+            },
+            "pipeTransport": {
+                "pipeCwd": "${workspaceRoot}",
+                "pipeProgram": "docker",
+                "pipeArgs": [
+                    "exec",
+                    "-i",
+                    "dotnet_watch_docker_example"
+                ],
+                "quoteArgs": false,
+                "debuggerPath": "/vsdbg/vsdbg"
+            }
         }
     ]
 }
