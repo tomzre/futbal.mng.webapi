@@ -2,7 +2,7 @@
 GET http://localhost:5001/api/users HTTP/1.1
 
 ### getall
-GET https://localhost:6010/api/users/8231e479-a96c-4a73-9822-83cf988f71da/mygames
+GET http://localhost:5001/api/users/c0517452-b6da-49d3-85b3-e157c5d3bdd9/games
 
 
 
@@ -27,13 +27,13 @@ content-type: application/json
 
 ### create new game (address can be added)
 
-POST http://localhost:5000/api/games HTTP/1.1
+POST http://localhost:5001/api/games HTTP/1.1
 content-type: application/json
 
 {
     "name": "new-game2",
     "gameDate": "2019-07-28",
-    "ownerId": "82dbe0ec-770f-4be0-ae9f-e8727f81c00d"
+    "ownerId": "c0517452-b6da-49d3-85b3-e157c5d3bdd9"
 }
 
 ###

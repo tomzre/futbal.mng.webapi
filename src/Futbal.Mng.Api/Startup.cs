@@ -1,6 +1,7 @@
 ﻿using System;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using futbal.mng.auth_identity.Extensions;
 using Futbal.Mng.Infrastructure.EF;
 using Futbal.Mng.Infrastructure.IoC;
 using Futbal.Mng.Webapi;
@@ -27,6 +28,9 @@ namespace Futbal.Mng.Api
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddHealthChecks();
+
+            services.AddRabbit();
+
             services.AddCors(options =>
         {
             options.AddPolicy("default",
