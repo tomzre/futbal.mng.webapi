@@ -6,6 +6,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
@@ -22,8 +23,10 @@ namespace Futbal.Mng.Api
             WebHost.CreateDefaultBuilder(args)
                 .UseKestrel(options =>
                 {
-                    options.Listen(IPAddress.Any, 5001); //HTTP port
-                                                         //options.Listen(IPAddress.Loopback, 6010, cfg => cfg.UseHttps()); //HTTPS port
+                    options.Listen(IPAddress.Any, 5001, cfg => {
+                        cfg.Protocols = HttpProtocols.Http1AndHttp2;
+                        // cfg.UseHttps();
+                    }); //HTTP port
                 })
                 .ConfigureAppConfiguration((WebHostBuilderContext ctx, IConfigurationBuilder builder) =>
                 {

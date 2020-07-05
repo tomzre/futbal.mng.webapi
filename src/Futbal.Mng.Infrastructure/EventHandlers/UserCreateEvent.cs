@@ -9,8 +9,6 @@ namespace Futbal.Mng.Infrastructure.EventHandlers
         public UserCreateEvent(IModel channel)
         {
             _channel = channel;
-        }
-
-        
+        }        
     }
 }

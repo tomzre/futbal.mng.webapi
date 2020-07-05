@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using futbal.mng.auth_identity.Extensions;
@@ -8,6 +9,7 @@ using Futbal.Mng.Webapi;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,15 +24,16 @@ namespace Futbal.Mng.Api
         }
 
         public IConfiguration Configuration { get; }
-        public IContainer ApplicationContainer { get; private set;}
+        public IContainer ApplicationContainer { get; private set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            services.AddResponseCompression(options => {
+                options.EnableForHttps = true;
+            });
             services.AddHealthChecks();
-
             services.AddRabbit();
-
             services.AddCors(options =>
         {
             options.AddPolicy("default",
@@ -46,12 +49,13 @@ namespace Futbal.Mng.Api
                 .AddDbContext<FutbalMngContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("FutbalMngDatabase"),
                     m => m.MigrationsAssembly("Futbal.Mng.Infrastructure")));
-            services.AddMvc(mvcOptions => {
+            services.AddMvc(mvcOptions =>
+            {
                 mvcOptions.EnableEndpointRouting = false;
             })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
                 .AddControllersAsServices();
-            services.AddGrpc();
+            //services.AddGrpc();
 
 
             var builder = new ContainerBuilder();
@@ -60,12 +64,13 @@ namespace Futbal.Mng.Api
             builder.RegisterModule<InfrastructureModule>();
             ApplicationContainer = builder.Build();
 
-            return new AutofacServiceProvider(ApplicationContainer);            
+            return new AutofacServiceProvider(ApplicationContainer);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseResponseCompression();
             if (env.EnvironmentName == "Development")
             {
                 app.UseDeveloperExceptionPage();
@@ -77,11 +82,11 @@ namespace Futbal.Mng.Api
             }
             app.UseCors("default");
             app.UseRouting();
-            //app.UseHttpsRedirection();
+
             app.UseMvc();
-            app.UseEndpoints(endpoints => 
+            app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGrpcService<GameResponse>();
+                //endpoints.MapGrpcService<GameResponse>();
                 endpoints.MapHealthChecks("/health");
 
             });

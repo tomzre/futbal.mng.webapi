@@ -2,7 +2,9 @@ using System.Collections.Generic;
 using Autofac;
 using AutoMapper;
 using Futbal.Mng.Infrastructure.CommandHandler;
+using Futbal.Mng.Infrastructure.EventBus;
 using Futbal.Mng.Infrastructure.Interfaces.CommandHandler;
+using Futbal.Mng.Infrastructure.Interfaces.EventBus;
 using Futbal.Mng.Infrastructure.Interfaces.QueryHandler;
 using Futbal.Mng.Infrastructure.QueryHandler;
 
@@ -52,9 +54,12 @@ namespace Futbal.Mng.Infrastructure.IoC
                 .As<ICommandBus>()
                 .InstancePerLifetimeScope();
 
-
             builder.RegisterType<QueryBus>()
                 .As<IQueryBus>()
+                .InstancePerLifetimeScope();
+            
+            builder.RegisterType<EventBusRabbitMq>()
+                .As<IEventBus>()
                 .InstancePerLifetimeScope();
         }
 

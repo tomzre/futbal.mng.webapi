@@ -1,5 +1,6 @@
 ##Get all users
 GET http://localhost:5001/api/users HTTP/1.1
+accept-encoding: gzip 
 
 ### getall
 GET http://localhost:5001/api/users/c0517452-b6da-49d3-85b3-e157c5d3bdd9/games
