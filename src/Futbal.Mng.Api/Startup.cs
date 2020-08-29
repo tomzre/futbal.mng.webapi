@@ -4,6 +4,8 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using futbal.mng.auth_identity.Extensions;
 using Futbal.Mng.Infrastructure.EF;
+using Futbal.Mng.Infrastructure.EventBus;
+using Futbal.Mng.Infrastructure.Interfaces.EventBus;
 using Futbal.Mng.Infrastructure.IoC;
 using Futbal.Mng.Webapi;
 using Microsoft.AspNetCore.Builder;
@@ -13,6 +15,7 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using RabbitMQ.Client;
 
 namespace Futbal.Mng.Api
 {
@@ -29,11 +32,14 @@ namespace Futbal.Mng.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddResponseCompression(options => {
+            services.AddResponseCompression(options =>
+            {
                 options.EnableForHttps = true;
             });
+
             services.AddHealthChecks();
-            services.AddRabbit();
+            //services.AddRabbit();
+            //.RegisterEventBus();
             services.AddCors(options =>
         {
             options.AddPolicy("default",
@@ -61,6 +67,27 @@ namespace Futbal.Mng.Api
             var builder = new ContainerBuilder();
 
             builder.Populate(services);
+
+            builder.Register<IRabbitMqPersistentConnection>(options =>
+            {
+                var factory = new ConnectionFactory
+                {
+                    HostName = "localhost",
+                    Password = "guest",
+                    UserName = "futbal-manager",
+                    Port = 5672
+                };
+                return new DefaultRabbitMqPersistentConnection(factory);
+            }).SingleInstance();
+
+            builder.Register<IEventBus>(options =>
+            {
+                var persistentConnection = options.Resolve<IRabbitMqPersistentConnection>();
+                var lifeTimeScope = options.Resolve<ILifetimeScope>();
+                Console.WriteLine($"is connected: {persistentConnection.IsConnected}");
+                return new EventBusRabbitMq(persistentConnection, lifeTimeScope);
+            }).SingleInstance();
+
             builder.RegisterModule<InfrastructureModule>();
             ApplicationContainer = builder.Build();
 
@@ -82,7 +109,8 @@ namespace Futbal.Mng.Api
             }
             app.UseCors("default");
             app.UseRouting();
-
+            var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
+            eventBus.Subscribe();
             app.UseMvc();
             app.UseEndpoints(endpoints =>
             {

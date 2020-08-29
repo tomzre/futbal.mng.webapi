@@ -1,14 +1,16 @@
+using System;
+using Futbal.Mng.Infrastructure.Interfaces.EventHandler;
 using RabbitMQ.Client;
 
 namespace Futbal.Mng.Infrastructure.EventHandlers
 {
-    public class UserCreateEvent
+    public class UserCreatedEvent : IIntegrationEvent
     {
-        private readonly IModel _channel;
+        public Guid Id { get; set; }
 
-        public UserCreateEvent(IModel channel)
-        {
-            _channel = channel;
-        }        
-    }
-}
+        public string Username { get; set; }
+
+        public string Email { get; set; }
+
+        public DateTime CreationDate { get => DateTime.UtcNow; }
+    }}

@@ -12,7 +12,7 @@ namespace Futbal.Mng.Infrastructure.EventBus
         private IConnection _connection;
         private bool _disposed;
 
-        object sync_root = new object();
+        private readonly object sync_root = new object();
 
         public DefaultRabbitMqPersistentConnection(IConnectionFactory factory)
         {
@@ -68,7 +68,7 @@ namespace Futbal.Mng.Infrastructure.EventBus
                     _connection.CallbackException += OnCallbackException;
                     _connection.ConnectionBlocked += OnConnectionBlocked;
 
-                    Console.WriteLine("RabbitMQ Client acquired a persistent connection to '{HostName}' and is subscribed to failure events", _connection.Endpoint.HostName);
+                    Console.WriteLine($"RabbitMQ Client acquired a persistent connection to '{_connection.Endpoint.HostName}' and is subscribed to failure events");
 
                     return true;
                 }
