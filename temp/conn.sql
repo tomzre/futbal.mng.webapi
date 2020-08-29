@@ -27,7 +27,7 @@ EXEC(@kill);
 
 
 
-
+use FutbalMng
 CREATE LOGIN futadmin WITH PASSWORD ='Fut@dm1npass'
 CREATE USER futadmin for login futadmin
 
