@@ -70,3 +70,5 @@ select
 select * from AspNetUsers
 
 select * from dbo.DeviceCodes
+
+

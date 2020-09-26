@@ -21,8 +21,12 @@ namespace Futbal.Mng.Infrastructure.EF.Configuration
                     address.HasKey("Id");
                 }
             );
+            configuration.Property(x => x.Id);
             configuration.HasMany(x => x.Attendees);
-
+            configuration.Property(x => x.Name)
+                .HasMaxLength(200)
+                .HasColumnName("nvarchar(200)");
+            
             var navigation = configuration.Metadata.FindNavigation(nameof(Game.Attendees));
             navigation.SetPropertyAccessMode(PropertyAccessMode.Field);
         }

@@ -17,7 +17,7 @@ namespace Futbal.Mng.Domain.Event
 
         public DateTime GameDate { get; private set; }
 
-        public User Owner { get; set; }
+        public User Owner { get; private set; }
 
         public Address Place { get; private set; }
 
