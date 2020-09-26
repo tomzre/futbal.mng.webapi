@@ -31,7 +31,7 @@ namespace Futbal.Mng.Infrastructure.EventBus
 
         public void Dispose()
         {
-             if (_consumerChannel != null)
+            if (_consumerChannel != null)
             {
                 _consumerChannel.Dispose();
             }
@@ -39,7 +39,7 @@ namespace Futbal.Mng.Infrastructure.EventBus
 
         public void Subscribe()
         {
-            if(!_persistentConnection.IsConnected)
+            if (!_persistentConnection.IsConnected)
             {
                 Console.WriteLine("Connecting");
                 _persistentConnection.TryConnect();
@@ -47,15 +47,15 @@ namespace Futbal.Mng.Infrastructure.EventBus
             }
             System.Console.WriteLine("Connected");
 
-            using(var channel = _persistentConnection.CreateModel())
-            {
-                channel.QueueBind(queue: "identity.user", exchange: "BROKER_NAME", routingKey: "UserCreatedEvent");
-            }
+            // using(var channel = _persistentConnection.CreateModel())
+            // {
+            //     channel.QueueBind(queue: "identity.user", exchange: "BROKER_NAME", routingKey: "UserCreatedEvent");
+            // }
 
             StartBasicConsume();
         }
 
-          private IModel CreateConsumerChannel()
+        private IModel CreateConsumerChannel()
         {
             if (!_persistentConnection.IsConnected)
             {
@@ -95,15 +95,17 @@ namespace Futbal.Mng.Infrastructure.EventBus
             System.Console.WriteLine("Starting RabbitMQ basic consume");
 
             if (_consumerChannel != null)
-            { 
+            {
                 var consumer = new AsyncEventingBasicConsumer(_consumerChannel);
 
                 consumer.Received += Consumer_Received;
 
-                _consumerChannel.BasicConsume(
-                    queue: "identity.user",
-                    autoAck: false,
-                    consumer: consumer);
+                _consumerChannel.BasicConsume(queue: "identity.user",
+                noLocal: false,
+                arguments: null,
+                exclusive: true,
+                autoAck: false,
+                consumer: consumer);
             }
             else
             {

@@ -107,16 +107,17 @@ namespace Futbal.Mng.Api
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            app.UseCors("default");
-            app.UseRouting();
+            
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
             eventBus.Subscribe();
+            
+            app.UseCors("default");
+            app.UseRouting();
             app.UseMvc();
             app.UseEndpoints(endpoints =>
             {
                 //endpoints.MapGrpcService<GameResponse>();
                 endpoints.MapHealthChecks("/health");
-
             });
         }
     }
