@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Futbal.Mng.Domain.Event;
 using Futbal.Mng.Domain.UserManagement;
+using Futbal.Mng.Domain.UserManagement.ValueObjects;
 using Futbal.Mng.Domain.ValueObjects;
 using NUnit.Framework;
 
@@ -54,6 +55,22 @@ namespace Tests
 
             //Assert
             Assert.IsTrue(game.Place.Equals(expectedPlace));
+        }
+
+        [Test]
+        public void Testing_ValueObject_primitiveobsession()
+        {
+            var skip = Skip.Create(1);
+
+            bool? test = skip;
+            string test2 = skip;
+            int? test3 = skip;
+            Skippability test4 = skip;
+
+            Assert.AreEqual(true, test);
+            Assert.AreEqual(1, test3);
+            Assert.AreEqual("true", test2);
+            Assert.AreEqual(Skippability.Skip, test4);
         }
     }
 }

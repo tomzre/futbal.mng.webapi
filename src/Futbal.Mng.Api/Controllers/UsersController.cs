@@ -26,7 +26,7 @@ namespace Futbal.Mng.Api.Controllers
         public async Task<IActionResult> GetMyGames(Guid userId)
         {
             var query = new GetAllUserGamesQuery(userId);
-            var games = await _queryBus.DispatchAsync<GetAllUserGamesQuery, IList<UserGamesListDto>>(query);
+            var games = await _queryBus.DispatchAsync<GetAllUserGamesQuery, IEnumerable<UserGamesListDto>>(query);
 
             return Ok(games);
         }

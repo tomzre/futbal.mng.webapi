@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
+using System.Net;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Futbal.Mng.Api.Models;
 using futbal.mng.auth_identity.Extensions;
 using Futbal.Mng.Infrastructure.EF;
 using Futbal.Mng.Infrastructure.EventBus;
@@ -9,13 +11,19 @@ using Futbal.Mng.Infrastructure.Interfaces.EventBus;
 using Futbal.Mng.Infrastructure.IoC;
 using Futbal.Mng.Webapi;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
+using Serilog;
+using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace Futbal.Mng.Api
 {
@@ -36,7 +44,7 @@ namespace Futbal.Mng.Api
             {
                 options.EnableForHttps = true;
             });
-
+            
             services.AddHealthChecks();
             //services.AddRabbit();
             //.RegisterEventBus();
@@ -74,7 +82,7 @@ namespace Futbal.Mng.Api
                 {
                     HostName = "localhost",
                     Password = "guest",
-                    UserName = "futbal-manager",
+                    UserName = "guest",//"futbal-manager",
                     Port = 5672
                 };
                 return new DefaultRabbitMqPersistentConnection(factory);
@@ -106,6 +114,24 @@ namespace Futbal.Mng.Api
             {
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
+                app.UseExceptionHandler(appError =>
+                {
+                    appError.Run(async context =>
+                    {
+                        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                        context.Response.ContentType = "application/json";
+                        var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
+                        if(contextFeature != null)
+                        { 
+                            Log.Error($"Something went wrong: {contextFeature.Error}");
+                            await context.Response.WriteAsync(new ErrorDetails()
+                            {
+                                StatusCode = context.Response.StatusCode,
+                                Message =  env.IsDevelopment() ? contextFeature.Error.Message : "Internal server error" 
+                            }.ToString());
+                        }
+                    });
+                });
             }
             
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();

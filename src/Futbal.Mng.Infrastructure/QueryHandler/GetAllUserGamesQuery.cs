@@ -10,7 +10,7 @@ using Futbal.Mng.Infrastructure.Interfaces.QueryHandler;
 
 namespace Futbal.Mng.Infrastructure.QueryHandler
 {
-    public class GetAllUserGamesQuery: IQuery<IList<UserGamesListDto>>
+    public class GetAllUserGamesQuery: IQuery<IEnumerable<UserGamesListDto>>
     {
         public Guid UserId { get; }
 
@@ -20,7 +20,7 @@ namespace Futbal.Mng.Infrastructure.QueryHandler
         }
     }
 
-    internal class GetAllUserGamesHandler : IHandleQuery<GetAllUserGamesQuery, IList<UserGamesListDto>>
+    internal class GetAllUserGamesHandler : IHandleQuery<GetAllUserGamesQuery, IEnumerable<UserGamesListDto>>
     {
         private readonly IGameRepository _gameRepository;
         private readonly IMapper _mapper;
@@ -35,12 +35,12 @@ namespace Futbal.Mng.Infrastructure.QueryHandler
             _gameRepository = gameRepository;
         }
 
-        public async Task<IList<UserGamesListDto>> HandleAsync(GetAllUserGamesQuery query)
+        public async Task<IEnumerable<UserGamesListDto>> HandleAsync(GetAllUserGamesQuery query)
         {
             var userGames = await _gameRepository.GetUserGames(query.UserId);
 
-            if(userGames == null)
-                return new List<UserGamesListDto>();
+            if (userGames == null)
+                return Enumerable.Empty<UserGamesListDto>();
 
             var mappedGames = _mapper.Map<IList<UserGamesListDto>>(userGames);
 
@@ -48,8 +48,8 @@ namespace Futbal.Mng.Infrastructure.QueryHandler
             {
                 mappedGame.AvailableAttendees = userGames
                     .FirstOrDefault(x => x.Id == mappedGame.Id)
-                    .Attendees.Where(x => x.IsAvailable == true)
-                    .Count();
+                    .Attendees
+                    .Count(x => x.IsAvailable);
 
                 mappedGame.RequiredAttendees = 14;
                 mappedGame.TotalAttendees = userGames
